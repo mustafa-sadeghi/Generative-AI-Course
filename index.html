@@ -44,13 +44,12 @@
 
         a { color: inherit; text-decoration: none; }
 
-        /* نوار بالا – منو در سمت راست */
         .top-bar {
             position: sticky;
             top: 0;
             z-index: 50;
             display: flex;
-            justify-content: flex-start; /* راست در حالت RTL */
+            justify-content: flex-start;
             align-items: center;
             padding: 10px 24px;
             background: linear-gradient(90deg, rgba(0,24,36,0.97), rgba(0,50,78,0.97));
@@ -89,7 +88,6 @@
             transform: scaleX(1);
         }
 
-        /* هدر */
         header {
             background: radial-gradient(circle at top left, #06618b, #001724);
             color: #fcf9f4;
@@ -126,7 +124,7 @@
         .hero-inner {
             position: relative;
             max-width: 980px;
-            margin: 0 auto; /* برگردانده شد به وسط */
+            margin: 0 auto;
             z-index: 1;
         }
 
@@ -509,7 +507,7 @@
         @media (max-width: 640px) {
             .top-bar {
                 padding-inline: 16px;
-                justify-content: flex-start; /* همچنان راست در موبایل */
+                justify-content: flex-start;
             }
 
             .top-nav {
@@ -533,6 +531,24 @@
                 justify-content: center;
             }
         }
+
+        /* ================================
+           نمایش فقط ۴ لینک در موبایل
+           ================================= */
+        @media (max-width: 640px) {
+
+            .top-nav a {
+                display: none;
+            }
+
+            .top-nav a[href="#about"],
+            .top-nav a[href="#topics"],
+            .top-nav a[href="#chapters"],
+            .top-nav a[href="#contact"] {
+                display: inline-flex;
+            }
+        }
+
     </style>
 </head>
 
@@ -566,9 +582,6 @@
                     <span> دانلود جزوه های فصل های دوره </span>
                     <span>↓</span>
                 </a>
-                <!-- <a href="#topics" class="hero-btn ghost">
-                    <span>بررسی سرفصل‌ها و مهارت‌هایی که یاد می‌گیرید</span>
-                </a> -->
             </div>
         </div>
     </div>
@@ -586,18 +599,10 @@
         </p>
         <p>
             در طول دوره، گام‌به‌گام با مفاهیم و مهارت‌هایی آشنا می‌شوید که
-            به شما امکان می‌دهد پرامپت‌های دقیق و چندمرحله‌ای بنویسید،
+            به شما امکان می‌دهد پرامپت‌های دقیق و چندمرحله‌ای بنویسید، 
             GPTهای سفارشی متناسب با نیاز خود بسازید و از ترکیب ChatGPT با ابزارهایی مثل Excel و Zapier
             برای خودکارسازی بخشی از کارهای روزمره و تحلیل داده استفاده کنید.
         </p>
-
-        <!-- <div class="chips-row">
-            <span class="chip"><span class="chip-dot"></span>کار با مدل‌های زبانی بزرگ (LLM)</span>
-            <span class="chip"><span class="chip-dot"></span>Prompt Engineering در عمل</span>
-            <span class="chip"><span class="chip-dot"></span>GPTهای سفارشی</span>
-            <span class="chip"><span class="chip-dot"></span>AI Agents و اتوماسیون</span>
-            <span class="chip"><span class="chip-dot"></span>ChatGPT + Excel</span>
-        </div> -->
 
         <ul class="timeline">
             <li class="timeline-item">
@@ -661,7 +666,6 @@
             </li>
         </ul>
 
-        </div>
     </section>
 
     <section class="section-card" id="chapters">
@@ -717,7 +721,6 @@
                 </a>
                 <div class="download-meta">
                    معرفی الگوهای AlternativeApps ، Recipe Pattern ، Meta Learning، Template Pattern ،Game Play
-
                 </div>
             </div>
         </div>
@@ -789,7 +792,6 @@
 
     <div class="downloads">
 
-        <!-- Scaling Laws -->
         <div class="download-item">
             <a class="download-link" href="https://arxiv.org/abs/2001.08361" target="_blank" rel="noopener noreferrer">
                 <div class="download-main">
@@ -802,7 +804,6 @@
             </div>
         </div>
 
-        <!-- GPT-3 Few-shot -->
         <div class="download-item">
             <a class="download-link" href="https://arxiv.org/abs/2005.14165" target="_blank" rel="noopener noreferrer">
                 <div class="download-main">
@@ -815,7 +816,6 @@
             </div>
         </div>
 
-        <!-- Chain-of-Thought -->
         <div class="download-item">
             <a class="download-link" href="https://arxiv.org/abs/2201.11903" target="_blank" rel="noopener noreferrer">
                 <div class="download-main">
@@ -828,7 +828,6 @@
             </div>
         </div>
 
-        <!-- Auto-CoT -->
         <div class="download-item">
             <a class="download-link" href="https://arxiv.org/abs/2210.03493" target="_blank" rel="noopener noreferrer">
                 <div class="download-main">
@@ -841,7 +840,6 @@
             </div>
         </div>
 
-        <!-- ReAct -->
         <div class="download-item">
             <a class="download-link" href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener noreferrer">
                 <div class="download-main">
@@ -854,7 +852,6 @@
             </div>
         </div>
 
-        <!-- Prompt Pattern Catalog -->
         <div class="download-item">
             <a class="download-link" href="https://arxiv.org/abs/2302.11382" target="_blank" rel="noopener noreferrer">
                 <div class="download-main">
@@ -867,7 +864,6 @@
             </div>
         </div>
 
-        <!-- LLaMA Models -->
         <div class="download-item">
             <a class="download-link" href="https://arxiv.org/abs/2302.13971" target="_blank" rel="noopener noreferrer">
                 <div class="download-main">
@@ -898,7 +894,8 @@
                 و خروجی‌های دقیق، قابل‌اعتماد و قابل‌استفاده در کار واقعی بگیرند.
             </li>
             <li>
-کارآفرینان، مدیران استارتاپ و بنیان‌گذاران کسب‌وکارهایی که می‌خواهند با کمک مدل‌های زبانی، فرایندهای خود را مقیاس‌پذیر کنند، هزینه‌ها را کاهش دهند و مزیت رقابتی ایجاد کنند.            </li>
+کارآفرینان، مدیران استارتاپ و بنیان‌گذاران کسب‌وکارهایی که می‌خواهند با کمک مدل‌های زبانی، فرایندهای خود را مقیاس‌پذیر کنند، هزینه‌ها را کاهش دهند و مزیت رقابتی ایجاد کنند.
+            </li>
             <li>
                 مدیران و کارشناسان سازمانی که می‌خواهند بخشی از فرایندهای تکراری،
                 گزارش‌نویسی و تحلیل داده را با کمک GPTهای سفارشی، Agentها و Excel خودکار کنند.
@@ -925,15 +922,15 @@
             </div>
             <div class="contact-item">
                 <div class="contact-label">لینکدین</div>
-                <div><a href="https://www.linkedin.com/in/mustafa-sadeghi" target="_blank">linkedin.com/in/mustafa-sadeghi</a></div>
+                <div><a href="https://www.linkedin.com/in/mustafa-sadeghi" target="_blank" rel="noopener">linkedin.com/in/mustafa-sadeghi</a></div>
             </div>
         </div>
     </section>
 
-</main>6
+</main>
 
 <footer>
-  Developed by <a href="https://www.linkedin.com/in/mustafa-sadeghi/" target="_blank" rel="noopener">Mustafa Sadeghi</a> ©
+  Developed by <a href="https://www.linkedin.com/in/mustafa-sadeghi/" target="_blank" rel="noopener noreferer">Mustafa Sadeghi</a> ©
 </footer>
 
 </body>
