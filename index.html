@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دوره هوش مصنوعی مولد | Generative AI</title>
+    <title>دوره هوش مصنوعی مولد و مهندسی پرامپت | Generative AI</title>
 
-    <!-- فونت وب -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -20,322 +19,518 @@
             --bg: #fcf9f4;
             --card-bg: #ffffff;
             --accent-chip: rgba(0, 46, 72, 0.08);
+            --border-subtle: rgba(0, 46, 72, 0.14);
+            --shadow-soft: 0 18px 55px rgba(0, 0, 0, 0.09);
+            --shadow-softer: 0 10px 30px rgba(0, 0, 0, 0.06);
+            --radius-lg: 22px;
+            --radius-md: 14px;
+            --transition-fast: 0.18s ease-out;
         }
 
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
 
         body {
             margin: 0;
             font-family: "Vazirmatn", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            background-color: var(--bg);
+            background:
+                radial-gradient(circle at top left, rgba(0,46,72,0.07), transparent 55%),
+                radial-gradient(circle at bottom right, rgba(0,46,72,0.05), transparent 55%),
+                var(--bg);
             color: var(--primary);
-            line-height: 1.8;
+            line-height: 1.9;
         }
 
-        a {
-            color: inherit;
-        }
+        a { color: inherit; text-decoration: none; }
 
+        /* نوار بالا – منو در سمت راست */
         .top-bar {
+            position: sticky;
+            top: 0;
+            z-index: 50;
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start; /* راست در حالت RTL */
             align-items: center;
-            padding: 12px 20px;
-            background-color: #001a29;
+            padding: 10px 24px;
+            background: linear-gradient(90deg, rgba(0,24,36,0.97), rgba(0,50,78,0.97));
+            backdrop-filter: blur(14px);
             color: #f5f7fa;
             font-size: 13px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
         }
 
-        .top-bar .brand {
-            font-weight: 600;
-            letter-spacing: 0.03em;
+        .top-nav {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 12px;
+            opacity: 0.92;
         }
 
-        .top-bar .tagline {
-            opacity: 0.8;
+        .top-nav a {
+            position: relative;
+            padding-bottom: 2px;
         }
 
+        .top-nav a::after {
+            content: "";
+            position: absolute;
+            inset-inline: 0;
+            bottom: 0;
+            height: 1.5px;
+            background: linear-gradient(90deg, #fefdfb, #a7d3ff);
+            transform-origin: center;
+            transform: scaleX(0);
+            transition: transform var(--transition-fast);
+        }
+
+        .top-nav a:hover::after {
+            transform: scaleX(1);
+        }
+
+        /* هدر */
         header {
-            background: linear-gradient(135deg, #002e48, #014568);
+            background: radial-gradient(circle at top left, #06618b, #001724);
             color: #fcf9f4;
-            padding: 50px 20px 60px;
-            text-align: center;
+            padding: 64px 20px 80px;
             position: relative;
             overflow: hidden;
         }
 
-        header::before {
-            content: "";
-            position: absolute;
-            inset-inline-start: -120px;
-            inset-block-start: -120px;
-            width: 260px;
-            height: 260px;
-            border-radius: 50%;
-            background: radial-gradient(circle at center, rgba(252, 249, 244, 0.16), transparent 65%);
-            opacity: 0.9;
-        }
-
+        header::before,
         header::after {
             content: "";
             position: absolute;
-            inset-inline-end: -120px;
-            inset-block-end: -140px;
+            border-radius: 50%;
+            opacity: 0.9;
+            pointer-events: none;
+        }
+
+        header::before {
+            inset-inline-start: -140px;
+            inset-block-start: -140px;
             width: 260px;
             height: 260px;
-            border-radius: 50%;
-            background: radial-gradient(circle at center, rgba(252, 249, 244, 0.12), transparent 65%);
+            background: radial-gradient(circle at center, rgba(252, 249, 244, 0.16), transparent 70%);
+        }
+
+        header::after {
+            inset-inline-end: -160px;
+            inset-block-end: -180px;
+            width: 320px;
+            height: 320px;
+            background: radial-gradient(circle at center, rgba(252, 249, 244, 0.12), transparent 70%);
         }
 
         .hero-inner {
             position: relative;
             max-width: 980px;
-            margin: 0 auto;
+            margin: 0 auto; /* برگردانده شد به وسط */
             z-index: 1;
         }
 
-        .hero-badge-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            justify-content: center;
-            margin-bottom: 18px;
-            font-size: 12px;
+        .hero-shell {
+            border-radius: 26px;
+            padding: 26px 22px 24px;
+            background: linear-gradient(
+                135deg,
+                rgba(0,0,0,0.45),
+                rgba(255,255,255,0.05)
+            );
+            backdrop-filter: blur(18px);
+            border: 1px solid rgba(252, 249, 244, 0.52);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
         }
 
-        .hero-badge {
-            padding: 4px 10px;
-            border-radius: 999px;
-            border: 1px solid rgba(252, 249, 244, 0.6);
-            background: rgba(0, 0, 0, 0.08);
-            backdrop-filter: blur(4px);
-        }
+        .hero-title-block { max-width: 720px; }
 
         header h1 {
             margin: 0 0 10px;
-            font-size: 28px;
+            font-size: 30px;
             font-weight: 700;
         }
 
         header p.hero-subtitle {
             margin: 0;
-            font-size: 15px;
-            opacity: 0.9;
+            font-size: 14.5px;
+            opacity: 0.94;
         }
 
         .hero-cta-row {
-            margin-top: 24px;
+            margin-top: 22px;
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
-            justify-content: center;
+            justify-content: flex-start;
         }
 
         .hero-btn {
-            padding: 10px 18px;
+            padding: 10px 20px;
             border-radius: 999px;
             border: none;
             cursor: pointer;
             font-size: 14px;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             text-decoration: none;
-            transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease;
         }
 
         .hero-btn.primary {
             background-color: #fcf9f4;
             color: #002e48;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+            box-shadow: 0 14px 36px rgba(0, 0, 0, 0.4);
         }
 
         .hero-btn.primary:hover {
             transform: translateY(-1px);
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+            box-shadow: 0 20px 48px rgba(0, 0, 0, 0.55);
         }
 
         .hero-btn.ghost {
             background: transparent;
             color: #fcf9f4;
-            border: 1px solid rgba(252, 249, 244, 0.7);
+            border: 1px solid rgba(252, 249, 244, 0.8);
         }
 
         .hero-btn.ghost:hover {
-            background: rgba(0, 0, 0, 0.14);
+            background: rgba(0, 0, 0, 0.25);
         }
 
         .page-wrapper {
-            max-width: 1100px;
-            margin: -32px auto 60px;
-            padding: 0 16px;
+            max-width: 920px;
+            margin: -34px auto 80px;
+            padding: 0 18px;
             position: relative;
         }
 
-        .grid {
-            display: grid;
-            grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.4fr);
-            gap: 26px;
+        .page-wrapper::before {
+            content: "";
+            position: absolute;
+            inset-inline: 6%;
+            top: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0,46,72,0.22), transparent);
+            opacity: 0.6;
         }
 
-        .card {
-            background: var(--card-bg);
-            border-radius: 14px;
-            padding: 24px 22px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            border: 1px solid rgba(0, 46, 72, 0.04);
+        .section-card {
+            background: radial-gradient(circle at top left, #ffffff, #fdfbf8);
+            border-radius: var(--radius-lg);
+            padding: 26px 22px 24px;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 24px;
         }
 
-        .card h2 {
-            margin: 0 0 14px;
-            font-size: 20px;
+        .section-card::before {
+            content: "";
+            position: absolute;
+            inset-inline-end: -36px;
+            inset-block-start: -42px;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: radial-gradient(circle at center, rgba(0,46,72,0.05), transparent 70%);
+        }
+
+        .section-card-header {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .section-title {
             display: flex;
             align-items: center;
             gap: 8px;
+            font-size: 19px;
+            margin: 0;
         }
 
-        .card h2::before {
+        .section-title::before {
             content: "";
             width: 6px;
-            height: 24px;
+            height: 26px;
             border-radius: 999px;
-            background: linear-gradient(180deg, #002e48, #014568);
+            background: linear-gradient(180deg, #002e48, #0194c7);
         }
 
-        .card p {
-            margin: 6px 0 10px;
-            font-size: 14px;
+        .section-subtitle {
+            margin: 4px 0 12px;
+            font-size: 13px;
+            color: #35556c;
         }
 
         .chips-row {
             display: flex;
             flex-wrap: wrap;
-            gap: 6px;
+            gap: 7px;
             margin-top: 10px;
+            margin-bottom: 6px;
         }
 
         .chip {
             font-size: 11px;
-            padding: 4px 9px;
+            padding: 4px 10px;
             border-radius: 999px;
             background-color: var(--accent-chip);
+            border: 1px solid rgba(0, 46, 72, 0.12);
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .chip-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 999px;
+            background: #002e48;
+            opacity: 0.65;
+        }
+
+        .timeline {
+            margin-top: 16px;
+            padding-right: 0;
+            list-style: none;
+            border-right: 1px dashed var(--border-subtle);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-right: 18px;
+            padding-bottom: 12px;
+            margin-bottom: 8px;
+        }
+
+        .timeline-bullet {
+            position: absolute;
+            right: -6px;
+            top: 6px;
+            width: 12px;
+            height: 12px;
+            border-radius: 999px;
+            background: #002e48;
+            box-shadow: 0 0 0 3px rgba(0, 46, 72, 0.16);
+        }
+
+        .timeline-label {
+            font-size: 11px;
+            opacity: 0.75;
+            margin-bottom: 3px;
+        }
+
+        .timeline-title {
+            font-size: 13.5px;
+            font-weight: 600;
         }
 
         .topics-list {
             list-style: none;
             padding-right: 0;
-            margin: 10px 0 0;
+            margin: 16px 0 0;
         }
 
         .topics-list li {
-            margin-bottom: 12px;
+            margin-bottom: 13px;
             font-size: 14px;
+            position: relative;
+            padding-right: 18px;
         }
 
-        .topics-list strong {
-            font-size: 14.5px;
+        .topics-list li::before {
+            content: "";
+            position: absolute;
+            inset-inline-start: auto;
+            inset-inline-end: 0;
+            top: 9px;
+            width: 7px;
+            height: 7px;
+            border-radius: 999px;
+            border: 2px solid #002e48;
+            background: #fcf9f4;
         }
+
+        .topics-list strong { font-size: 14.5px; }
 
         .highlight-box {
-            margin-top: 12px;
-            padding: 12px 12px;
-            border-radius: 10px;
+            margin-top: 16px;
+            padding: 13px 13px;
+            border-radius: 12px;
             background-color: #fcf9f4;
-            border: 1px solid rgba(0, 46, 72, 0.12);
+            border: 1px dashed var(--border-subtle);
             font-size: 13px;
         }
 
-        .downloads {
+        .highlight-title {
+            font-weight: 600;
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 10px;
             margin-top: 14px;
         }
 
-        .download-item {
-            margin-bottom: 10px;
+        .skill-card {
+            border-radius: var(--radius-md);
+            padding: 8px 10px;
+            background: #ffffff;
+            border: 1px solid rgba(0, 46, 72, 0.08);
+            box-shadow: var(--shadow-softer);
+            font-size: 12.5px;
         }
+
+        .skill-title {
+            font-weight: 600;
+            font-size: 12.5px;
+            margin-bottom: 2px;
+        }
+
+        .downloads {
+            margin-top: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .download-item { position: relative; }
 
         .download-link {
             display: flex;
             align-items: center;
-            gap: 8px;
-            padding: 10px 14px;
-            border-radius: 10px;
+            justify-content: flex-start;
+            gap: 10px;
+            padding: 11px 14px;
+            border-radius: 12px;
             background-color: #002e48;
             color: #fcf9f4;
-            text-decoration: none;
-            font-size: 14px;
-            transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
-            box-shadow: 0 4px 12px rgba(0, 46, 72, 0.35);
+            font-size: 13.5px;
+            transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
+            box-shadow: 0 8px 22px rgba(0, 46, 72, 0.55);
         }
 
-        .download-link span.icon {
-            font-size: 16px;
+        .download-main {
+            display: flex;
+            align-items: center;
+            gap: 9px;
         }
 
         .download-link:hover {
             background-color: #014568;
             transform: translateY(-1px);
-            box-shadow: 0 6px 18px rgba(0, 46, 72, 0.5);
+            box-shadow: 0 12px 30px rgba(0, 46, 72, 0.7);
         }
 
         .download-meta {
-            font-size: 11px;
-            opacity: 0.8;
+            font-size: 11.2px;
+            opacity: 0.82;
             margin-top: 4px;
-            margin-right: 4px;
+            margin-right: 3px;
         }
 
         .audience-list {
             list-style: none;
             padding-right: 0;
-            margin: 8px 0 0;
+            margin: 10px 0 0;
             font-size: 13px;
         }
 
         .audience-list li {
-            margin-bottom: 6px;
+            margin-bottom: 7px;
+            padding-right: 14px;
+            position: relative;
+        }
+
+        .audience-list li::before {
+            content: "•";
+            position: absolute;
+            right: 0;
+            top: 0;
+            font-size: 14px;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .contact-item {
+            border-radius: var(--radius-md);
+            padding: 10px 12px;
+            background: #ffffff;
+            border: 1px solid rgba(0, 46, 72, 0.08);
+            box-shadow: var(--shadow-softer);
+            font-size: 13px;
+        }
+
+        .contact-label {
+            font-weight: 600;
+            margin-bottom: 4px;
+            font-size: 12.5px;
         }
 
         footer {
             text-align: center;
-            padding: 22px 12px 28px;
+            padding: 24px 12px 34px;
             color: #002e48;
-            opacity: 0.7;
+            opacity: 0.8;
             font-size: 12px;
         }
 
-        @media (max-width: 900px) {
+        @media (max-width: 780px) {
             header {
-                padding: 40px 16px 50px;
+                padding: 48px 16px 60px;
             }
 
-            header h1 {
-                font-size: 22px;
+            .hero-shell {
+                padding: 20px 18px 20px;
             }
 
-            header p.hero-subtitle {
-                font-size: 13px;
-            }
+            header h1 { font-size: 24px; }
+            header p.hero-subtitle { font-size: 13px; }
 
             .page-wrapper {
-                margin-top: -24px;
-            }
-
-            .grid {
-                grid-template-columns: minmax(0, 1fr);
+                margin-top: -26px;
             }
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 640px) {
             .top-bar {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 4px;
+                padding-inline: 16px;
+                justify-content: flex-start; /* همچنان راست در موبایل */
             }
 
-            .card {
-                padding: 18px 16px;
+            .top-nav {
+                gap: 10px;
+                flex-wrap: wrap;
+                justify-content: flex-start;
+            }
+
+            .section-card {
+                padding: 20px 16px 18px;
+            }
+
+            .section-card-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 6px;
+            }
+
+            .hero-btn {
+                width: 100%;
+                justify-content: center;
             }
         }
     </style>
@@ -344,176 +539,401 @@
 <body>
 
 <div class="top-bar">
-    <div class="brand">Generative AI Course</div>
-    <div class="tagline">مرکز فناوری اطلاعات شهرستان گرگان</div>
+    <nav class="top-nav">
+        <a href="#about">معرفی دوره</a>
+        <a href="#topics">سرفصل‌ها</a>
+        <a href="#chapters">جزوه‌ها</a>
+        <a href="#prompts">پرامپت‌ها</a>
+        <a href="#resources">منابع</a>
+        <a href="#audience">مخاطبان</a>
+        <a href="#contact">تماس با من</a>
+    </nav>
 </div>
 
 <header>
     <div class="hero-inner">
-        <div class="hero-badge-row">
-            <div class="hero-badge">تمرکز بر مهندسی پرامپت و مدل‌های زبانی بزرگ</div>
-            <div class="hero-badge">ساخت GPTهای سفارشی، AI Agents و تحلیل داده با Excel</div>
-        </div>
+        <div class="hero-shell">
+            <div class="hero-title-block">
+                <h1>دوره تخصصی هوش مصنوعی مولد و مهندسی پرامپت</h1>
+                <p class="hero-subtitle">
+                    یاد بگیرید چگونه با طراحی پرامپت‌های حرفه‌ای، ساخت GPTهای سفارشی و استفاده از ابزارهایی مثل Excel و Zapier،
+                    از ChatGPT و مدل‌های زبانی بزرگ به‌عنوان یک <strong>ابزار جدی در مسیر شغلی ، کسب‌وکار و یادگیری</strong> استفاده کنید.
+                </p>
+            </div>
 
-        <h1>دوره تخصصی هوش مصنوعی مولد و مهندسی پرامپت</h1>
-        <p class="hero-subtitle">
-            در این دوره یاد می‌گیرید چگونه از استفاده معمولی از ChatGPT فراتر بروید،
-            پرامپت‌های حرفه‌ای طراحی کنید، دستیارهای هوشمند بسازید و از ترکیب هوش مصنوعی و Excel
-            برای تحلیل داده و تصمیم‌گیری استفاده کنید.
-        </p>
-
-        <div class="hero-cta-row">
-            <a href="#chapters" class="hero-btn primary">
-                <span>مشاهده فصل‌های منتشرشده</span>
-                <span>↓</span>
-            </a>
-            <a href="#topics" class="hero-btn ghost">
-                <span>آشنایی با سرفصل‌ها و مهارت‌ها</span>
-            </a>
+            <div class="hero-cta-row">
+                <a href="#chapters" class="hero-btn primary">
+                    <span> دانلود جزوه های فصل های دوره </span>
+                    <span>↓</span>
+                </a>
+                <!-- <a href="#topics" class="hero-btn ghost">
+                    <span>بررسی سرفصل‌ها و مهارت‌هایی که یاد می‌گیرید</span>
+                </a> -->
+            </div>
         </div>
     </div>
 </header>
 
 <main class="page-wrapper">
-    <div class="grid">
-        <!-- ستون چپ: توضیح و سرفصل‌ها -->
-        <section class="card" id="topics">
-            <h2>درباره دوره و سرفصل‌ها</h2>
-            <p>
-                این دوره برای افرادی طراحی شده است که می‌خواهند به‌صورت جدی با هوش مصنوعی مولد کار کنند؛
-                از پرامپت‌نویسی و کار با مدل‌های زبانی بزرگ گرفته تا ساخت GPTهای سفارشی، Agentهای خودکار
-                و به‌کارگیری ChatGPT در تحلیل داده و گزارش‌سازی.
-            </p>
 
-            <div class="chips-row">
-                <span class="chip">هوش مصنوعی مولد (GenAI)</span>
-                <span class="chip">Prompt Engineering</span>
-                <span class="chip">GPTهای سفارشی</span>
-                <span class="chip">AI Agents &amp; Zapier</span>
-                <span class="chip">ChatGPT + Excel</span>
-            </div>
+    <section class="section-card" id="about">
+        <div class="section-card-header">
+            <h2 class="section-title">معرفی دوره</h2>
+        </div>
+        <p class="section-subtitle">
+            این دوره برای کسانی طراحی شده است که می‌خواهند از پرسیدن چند سؤال ساده از ChatGPT فراتر بروند و 
+            از مدل‌های زبانی بزرگ به‌عنوان یک <strong>همکار هوشمند</strong> در کنار خود استفاده کنند.
+        </p>
+        <p>
+            در طول دوره، گام‌به‌گام با مفاهیم و مهارت‌هایی آشنا می‌شوید که
+            به شما امکان می‌دهد پرامپت‌های دقیق و چندمرحله‌ای بنویسید،
+            GPTهای سفارشی متناسب با نیاز خود بسازید و از ترکیب ChatGPT با ابزارهایی مثل Excel و Zapier
+            برای خودکارسازی بخشی از کارهای روزمره و تحلیل داده استفاده کنید.
+        </p>
 
-            <ul class="topics-list">
-                <li>
-                    <strong>۱. مبانی هوش مصنوعی مولد و مدل‌های زبانی بزرگ</strong><br>
-                    آشنایی با مفهوم GenAI، ساختار مدل‌های زبانی بزرگ (LLMها)، توانایی‌ها و محدودیت‌های آن‌ها
-                    و اینکه چرا کیفیت پرامپت تا این حد بر نتیجه تأثیر می‌گذارد.
-                </li>
-                <li>
-                    <strong>۲. مهندسی پرامپت (Prompt Engineering)</strong><br>
-                    اصول نوشتن پرامپت‌های خوب، ساختاردهی پرامپت، تعریف نقش، تنظیم لحن،
-                    زنجیره‌سازی پرامپت‌ها، پرسش‌های چندمرحله‌ای و تکنیک‌های اصلاح و بهبود تدریجی پاسخ‌ها.
-                </li>
-                <li>
-                    <strong>۳. طراحی و ساخت GPTهای سفارشی</strong><br>
-                    یاد می‌گیرید چگونه برای حوزه‌های مختلف (آموزش، کسب‌وکار، تولید محتوا، تحلیل داده و ...)
-                    یک دستیار اختصاصی ایجاد کنید، دستورالعمل‌های پایدار برای آن بنویسید و داده‌ها و اسناد
-                    خود را به آن متصل کنید تا خروجی متناسب با نیازتان تولید شود.
-                </li>
-                <li>
-                    <strong>۴. ساخت AI Agents با استفاده از ChatGPT و Zapier</strong><br>
-                    در این بخش با مفهوم Agent آشنا می‌شوید؛ عامل‌های هوشمندی که می‌توانند
-                    کارهای تکراری را خودکار انجام دهند. یاد می‌گیرید چگونه ChatGPT را به ابزارهایی مثل ایمیل،
-                    تقویم و Google Sheets متصل کنید تا کارهایی مانند ثبت اطلاعات، ساخت گزارش، ارسال پیام
-                    و به‌روزرسانی فایل‌ها بدون دخالت دستی انجام شود.
-                </li>
-                <li>
-                    <strong>۵. ChatGPT + Excel: فرمول‌ها، تحلیل و مصورسازی</strong><br>
-                    نحوه استفاده از ChatGPT برای تولید و اصلاح فرمول‌های پیچیده، تبدیل توضیحات متنی به شیت‌های Excel،
-                    ساخت داشبورد و نمودار و رفع اشکال فایل‌های Excel با کمک هوش مصنوعی.
-                </li>
-                <li>
-                    <strong>۶. Data Storytelling و تصمیم‌گیری داده‌محور</strong><br>
-                    تبدیل خروجی‌های عددی و خام به روایت و گزارش قابل‌فهم برای مدیران و ذی‌نفعان،
-                    خلاصه‌سازی نتایج، استخراج بینش‌های کلیدی و استفاده از ChatGPT برای نوشتن گزارش‌ها و اسلایدهای پرزنتیشن.
-                </li>
-            </ul>
+        <!-- <div class="chips-row">
+            <span class="chip"><span class="chip-dot"></span>کار با مدل‌های زبانی بزرگ (LLM)</span>
+            <span class="chip"><span class="chip-dot"></span>Prompt Engineering در عمل</span>
+            <span class="chip"><span class="chip-dot"></span>GPTهای سفارشی</span>
+            <span class="chip"><span class="chip-dot"></span>AI Agents و اتوماسیون</span>
+            <span class="chip"><span class="chip-dot"></span>ChatGPT + Excel</span>
+        </div> -->
 
-            <div class="highlight-box">
-                در طول دوره، روی پرامپت‌های واقعی کار می‌کنید؛
-                برای هر مبحث چندین نمونه‌پرومپت و سناریوی کاربردی ارائه می‌شود تا بتوانید
-                همان لحظه در پروژه‌ها و کار روزمره خود از آن‌ها استفاده کنید.
-            </div>
-        </section>
+        <ul class="timeline">
+            <li class="timeline-item">
+                <div class="timeline-bullet"></div>
+                <div class="timeline-label">گام ۱</div>
+                <div class="timeline-title">درک رفتار مدل‌های زبانی و نقش پرامپت در کنترل خروجی</div>
+            </li>
+            <li class="timeline-item">
+                <div class="timeline-bullet"></div>
+                <div class="timeline-label">گام ۲</div>
+                <div class="timeline-title">تسلط بر مهندسی پرامپت و الگوهای پرامپت نویسی </div>
+            </li>
+            <li class="timeline-item">
+                <div class="timeline-bullet"></div>
+                <div class="timeline-label">گام ۳</div>
+                <div class="timeline-title">ساخت GPTهای سفارشی و Agentهای کاربردی </div>
+            </li>
+            <li class="timeline-item">
+                <div class="timeline-bullet"></div>
+                <div class="timeline-label">گام ۴</div>
+                <div class="timeline-title">استفاده از ChatGPT  در کار با Excel</div>
+            </li>
+        </ul>
+    </section>
 
-        <!-- ستون راست: فایل‌ها و مخاطبان -->
-        <section class="card" id="chapters">
-            <h2>فصل‌های منتشرشده و فایل‌های دوره</h2>
-            <p>
-                محتوای دوره به‌صورت جزوه‌های PDF مرحله‌به‌مرحله ارائه می‌شود.
-                هر فصل شامل توضیح مفهومی، مثال‌های عملی و مجموعه‌ای از پرامپت‌های آماده استفاده است.
-            </p>
+    <section class="section-card" id="topics">
+        <div class="section-card-header">
+            <h2 class="section-title">سرفصل‌های اصلی دوره</h2>
+        </div>
+        <p class="section-subtitle">
+            سرفصل‌ها به‌گونه‌ای طراحی شده‌اند که یک مسیر یادگیری پیوسته ایجاد کنند؛
+            از آشنایی اولیه تا ساخت راهکارهای واقعی مبتنی بر هوش مصنوعی.
+        </p>
 
-            <div class="downloads">
-                <div class="download-item">
-                    <a class="download-link" href="assets/pdf/GenAI-ch1.pdf">
-                        <span class="icon">📄</span>
-                        <span>فصل اول – مبانی GenAI و کار با ChatGPT</span>
-                    </a>
-                    <div class="download-meta">
-                        معرفی مفاهیم پایه هوش مصنوعی مولد، آشنایی با ChatGPT و دیگر مدل‌های زبانی،
-                        نحوه طرح اولین پرسش‌ها و شناخت توانایی‌ها و محدودیت‌های سیستم.
+        <ul class="topics-list">
+            <li>
+                <strong>۱. مبانی هوش مصنوعی مولد و مدل‌های زبانی بزرگ</strong><br>
+                آشنایی با مفهوم GenAI، ساختار LLMها، نحوه تولید پاسخ، نقاط قوت و محدودیت‌ها
+                و این‌که چرا کیفیت پرامپت مهم‌ترین عامل در رسیدن به خروجی قابل‌اعتماد است.
+            </li>
+            <li>
+                <strong>۲. مهندسی پرامپت (Prompt Engineering) در عمل</strong><br>
+                اصول نوشتن پرامپت‌های خوب، تعریف نقش، تنظیم لحن و سبک، کنترل طول پاسخ،
+                زنجیره‌سازی پرامپت‌ها و طراحی سناریوهای چندمرحله‌ای برای یادگیری، تولید محتوا،
+                تحلیل متن، مستندسازی و تصمیم‌سازی.
+            </li>
+            <li>
+                <strong>۳. طراحی و ساخت GPTهای سفارشی</strong><br>
+                ساخت دستیارهای اختصاصی برای حوزه‌های مختلف (آموزش، کسب‌وکار، تحلیل داده، تولید محتوا و ...)
+                نوشتن دستورالعمل پایدار، تنظیم رفتار مدل، و اتصال GPT به اسناد و داده‌های موردنیاز شما.
+            </li>
+            <li>
+                <strong>۴. ساخت AI Agents با استفاده از ChatGPT و Zapier</strong><br>
+                آشنایی با Agentها، اتصال ChatGPT به سرویس‌هایی مانند Gmail، Google Sheets و تقویم،
+                و طراحی جریان‌های کاری که کارهای تکراری را به‌صورت خودکار انجام می‌دهند.
+            </li>
+            <li>
+                <strong>۵. ChatGPT + Excel: فرمول‌ها، تحلیل داده و مصورسازی</strong><br>
+                تبدیل توضیحات متنی به شیت‌های Excel، کمک گرفتن از ChatGPT برای طراحی و عیب‌یابی فرمول‌های پیچیده،
+                ساخت داشبورد و نمودار و استفاده از هوش مصنوعی برای بررسی، پاک‌سازی و خلاصه‌سازی داده‌ها.
+            </li>
+        </ul>
+
+        </div>
+    </section>
+
+    <section class="section-card" id="chapters">
+        <div class="section-card-header">
+            <h2 class="section-title">جزوه‌ها و فصل‌های منتشرشده</h2>
+        </div>
+        <p class="section-subtitle">
+            جزوات دوره را از اینجا دانلود نمایید.
+        </p>
+
+        <div class="downloads">
+            <div class="download-item">
+                <a class="download-link" href="assets/pdf/GenAI-ch1.pdf">
+                    <div class="download-main">
+                        <span>فصل اول – آشنایی با هوش مصنوعی به عنوان یک فناوری نوین</span>
                     </div>
-                </div>
-
-                <div class="download-item">
-                    <a class="download-link" href="assets/pdf/GenAI-ch2.pdf">
-                        <span class="icon">🧠</span>
-                        <span>فصل دوم – مهندسی پرامپت: اصول و تکنیک‌ها</span>
-                    </a>
-                    <div class="download-meta">
-                        ساختار یک پرامپت خوب، الگوهای پرامپت، زنجیره‌سازی، تعریف نقش و
-                        تمرین‌های عملی برای طراحی پرامپت‌های دقیق در سناریوهای مختلف.
-                    </div>
-                </div>
-
-                <div class="download-item">
-                    <a class="download-link" href="assets/pdf/GenAI-ch3.pdf">
-                        <span class="icon">🤖</span>
-                        <span>فصل سوم – GPTهای سفارشی و AI Agents</span>
-                    </a>
-                    <div class="download-meta">
-                        طراحی و پیاده‌سازی دستیارهای اختصاصی، تنظیم دستورالعمل‌های پایدار (System Prompt)،
-                        اتصال به ابزارهای بیرونی و ساخت Agentهایی که بتوانند بخشی از کار شما را خودکار انجام دهند.
-                    </div>
-                </div>
-
-                <div class="download-item">
-                    <a class="download-link" href="assets/pdf/GenAI-ch4.pdf">
-                        <span class="icon">📊</span>
-                        <span>فصل چهارم – ChatGPT + Excel و داستان‌گویی با داده</span>
-                    </a>
-                    <div class="download-meta">
-                        استفاده از ChatGPT برای تولید فرمول، تحلیل داده، ساخت نمودار و داشبورد
-                        و تبدیل نتایج به گزارش‌ها و روایت‌های قابل‌فهم برای تصمیم‌گیران.
-                    </div>
+                </a>
+                <div class="download-meta">
+                    معرفی مفاهیم پایه هوش مصنوعی ، آشنایی با مدل‌های زبانی
+                    و شروع کار با ChatGPT و پرسش‌های اولیه.
                 </div>
             </div>
 
-            <h2 style="margin-top: 30px;">این دوره برای چه کسانی مناسب است؟</h2>
-            <ul class="audience-list">
-                <li>
-                    افرادی که می‌خواهند از کاربر معمولی ChatGPT به یک کاربر حرفه‌ای و طراح پرامپت تبدیل شوند.
-                </li>
-                <li>
-                    برنامه‌نویسان، تحلیل‌گران داده، متخصصان محصول و علاقه‌مندان به ساخت ابزارها و سرویس‌های
-                    مبتنی بر هوش مصنوعی مولد.
-                </li>
-                <li>
-                    مدیران و کارشناسان سازمانی که قصد دارند بخشی از فرایندهای کاری، گزارش‌نویسی و تحلیل داده را
-                    با کمک ChatGPT، GPTهای سفارشی، Zapier و Excel خودکار کنند.
-                </li>
-                <li>
-                    دانشجویان و علاقه‌مندان به هوش مصنوعی که می‌خواهند پیش از ورود به مباحث توسعه مدل،
-                    مهارت کار حرفه‌ای با مدل‌های آماده را به‌خوبی یاد بگیرند.
-                </li>
-            </ul>
-        </section>
+            <div class="download-item">
+                <a class="download-link" href="assets/pdf/GenAI-ch2.pdf">
+                    <div class="download-main">
+                        <span>فصل دوم – پرامپت چیست و چگونه رفتار مدل
+های زبانی را کنترل میکند؟ </span>
+                    </div>
+                </a>
+                <div class="download-meta">
+                    ساختار یک پرامپت خوب، الگوهای مهم، مدیریت Context
+                    و تمرین‌هایی برای سناریوهای واقعی.
+                </div>
+            </div>
+
+            <div class="download-item">
+                <a class="download-link" href="assets/pdf/GenAI-ch3.pdf">
+                    <div class="download-main">
+                        <span>فصل سوم – الگوهای پرامپت نویسی (بخش اول) </span>
+                    </div>
+                </a>
+                <div class="download-meta">
+                   معرفی الگوهای Persona Pattern ، Question Refinement ، Cognitive Verifier، Audience Persona ،Flipped Interaction
+                </div>
+            </div>
+
+            <div class="download-item">
+                <a class="download-link" href="assets/pdf/GenAI-ch4.pdf">
+                    <div class="download-main">
+                        <span>فصل چهارم –الگوهای پرامپت نویسی (بخش دوم)</span>
+                    </div>
+                </a>
+                <div class="download-meta">
+                   معرفی الگوهای AlternativeApps ، Recipe Pattern ، Meta Learning، Template Pattern ،Game Play
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-card" id="prompts">
+        <div class="section-card-header">
+            <h2 class="section-title">پکیج پرامپت‌های کاربردی</h2>
+        </div>
+        <p class="section-subtitle">
+            این بخش شامل فایل‌های پرامپت‌های کاربردی  که در طول دوره طراحی کردیم است.
+            می‌توانید آن‌ها را دانلود و متناسب با نیاز خود شخصی‌سازی کنید.
+        </p>
+
+        <div class="downloads">
+            <div class="download-item">
+                <a class="download-link" href="assets/prompts/learning-prompts.pdf">
+                    <div class="download-main">
+                        <span>پکیج پرامپت‌های یادگیری و مطالعه</span>
+                    </div>
+                </a>
+                <div class="download-meta">
+                    پرامپت‌هایی برای توضیح مفاهیم سخت، طراحی برنامه مطالعه، تولید مثال و تمرین و خلاصه‌سازی متون آموزشی.
+                </div>
+            </div>
+
+            <div class="download-item">
+                <a class="download-link" href="assets/prompts/content-prompts.pdf">
+                    <div class="download-main">
+                        <span>پکیج پرامپت‌های تولید محتوا</span>
+                    </div>
+                </a>
+                <div class="download-meta">
+                    پرامپت‌های آماده برای ایده‌پردازی، ساختاردهی، نگارش، بازنویسی و تنظیم لحن محتوا در قالب‌های مختلف.
+                </div>
+            </div>
+
+            <div class="download-item">
+                <a class="download-link" href="assets/prompts/data-prompts.pdf">
+                    <div class="download-main">
+                        <span>پکیج پرامپت‌های تحلیل داده و گزارش‌نویسی</span>
+                    </div>
+                </a>
+                <div class="download-meta">
+                    پرامپت‌هایی برای کار با داده‌ها، تفسیر خروجی Excel، نوشتن گزارش مدیریتی و آماده‌سازی متن برای ارائه.
+                </div>
+            </div>
+
+            <div class="download-item">
+                <a class="download-link" href="assets/prompts/agent-prompts.pdf">
+                    <div class="download-main">
+                        <span>پکیج پرامپت‌های Agent و GPT سفارشی</span>
+                    </div>
+                </a>
+                <div class="download-meta">
+                    قالب‌های آماده برای نوشتن System Prompt، تعریف وظایف Agent و استفاده از ابزارهای خارجی.
+                </div>
+            </div>
+        </div>
+    </section>
+
+<section class="section-card" id="resources">
+    <div class="section-card-header">
+        <h2 class="section-title">منابع و مراجع استفاده‌شده در دوره</h2>
     </div>
-</main>
+    <p class="section-subtitle">
+        در این بخش می‌توانید به مقالات و منابعی را که برای طراحی سرفصل‌های دوره استفاده شده‌اند دسترسی داشته باشید.
+    </p>
+
+    <div class="downloads">
+
+        <!-- Scaling Laws -->
+        <div class="download-item">
+            <a class="download-link" href="https://arxiv.org/abs/2001.08361" target="_blank" rel="noopener noreferrer">
+                <div class="download-main">
+                    <span>Scaling Laws for Neural Language Models (Kaplan et al., 2020)</span>
+                </div>
+            </a>
+            <div class="download-meta">
+                مقاله‌ای پایه‌ای درباره «قوانین مقیاس‌پذیری» در مدل‌های زبانی که نشان می‌دهد عملکرد مدل چگونه با اندازه مدل، حجم داده و میزان محاسبات رابطهٔ توان‌قانونی دارد.
+                مفاهیم این مقاله در بخش‌های مربوط به انتخاب اندازهٔ مدل، تخمین هزینهٔ آموزش و بحث دربارهٔ کارایی مقیاس‌پذیری در دوره استفاده شده است.
+            </div>
+        </div>
+
+        <!-- GPT-3 Few-shot -->
+        <div class="download-item">
+            <a class="download-link" href="https://arxiv.org/abs/2005.14165" target="_blank" rel="noopener noreferrer">
+                <div class="download-main">
+                    <span>Language Models are Few-Shot Learners (Brown et al., 2020)</span>
+                </div>
+            </a>
+            <div class="download-meta">
+                مقالهٔ اصلی معرفی GPT-3 که نشان می‌دهد مدل‌های زبانی بزرگ می‌توانند تنها با چند مثال متنی (few-shot / in-context learning) کارهای جدید را انجام دهند.
+                در بخش‌های مربوط به پرامپت‌نویسی، چندمثالی‌کردن پرامپت‌ها و طراحی سناریوهای تعاملی، از نتایج و ایده‌های این کار استفاده شده است.
+            </div>
+        </div>
+
+        <!-- Chain-of-Thought -->
+        <div class="download-item">
+            <a class="download-link" href="https://arxiv.org/abs/2201.11903" target="_blank" rel="noopener noreferrer">
+                <div class="download-main">
+                    <span>Chain-of-Thought Prompting Elicits Reasoning in LLMs (Wei et al., 2022)</span>
+                </div>
+            </a>
+            <div class="download-meta">
+                این مقاله مفهوم «Chain-of-Thought Prompting» را معرفی می‌کند؛ یعنی تولید گام‌به‌گام استدلال قبل از پاسخ نهایی.
+                تمرین‌های دوره در بخش حل مسئله، طراحی پرامپت‌های گام‌به‌گام و نوشتن توضیح فرایند فکر کردن مدل، مستقیماً بر اساس ایده‌ها و مثال‌های این مقاله طراحی شده‌اند.
+            </div>
+        </div>
+
+        <!-- Auto-CoT -->
+        <div class="download-item">
+            <a class="download-link" href="https://arxiv.org/abs/2210.03493" target="_blank" rel="noopener noreferrer">
+                <div class="download-main">
+                    <span>Automatic Chain-of-Thought Prompting in Large Language Models (Zhang et al., 2022)</span>
+                </div>
+            </a>
+            <div class="download-meta">
+                این مقاله روش Auto-CoT را برای ساخت خودکار زنجیره‌های استدلال به‌عنوان دموی پرامپت‌ها پیشنهاد می‌دهد.
+                در فصل مربوط به «اتوماسیون پرامپت‌نویسی» و طراحی workflowهای نیمه‌خودکار برای تولید CoT، از ایدهٔ خوشه‌بندی پرسش‌ها و تولید خودکار استدلال استفاده شده است.
+            </div>
+        </div>
+
+        <!-- ReAct -->
+        <div class="download-item">
+            <a class="download-link" href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener noreferrer">
+                <div class="download-main">
+                    <span>ReAct: Synergizing Reasoning and Acting in Language Models (Yao et al., 2023)</span>
+                </div>
+            </a>
+            <div class="download-meta">
+                در این کار، الگوی ReAct معرفی می‌شود که در آن مدل هم‌زمان «استدلال زبانی» و «اقدام» (مثل فراخوانی ابزارها یا APIها) را انجام می‌دهد.
+                سناریوهای مربوط به Agentها، استفاده از ابزارها، و طراحی Agentهای تصمیم‌گیر در محیط‌های واقعی در این دوره بر اساس الگوهای پیشنهادی این مقاله شکل گرفته است.
+            </div>
+        </div>
+
+        <!-- Prompt Pattern Catalog -->
+        <div class="download-item">
+            <a class="download-link" href="https://arxiv.org/abs/2302.11382" target="_blank" rel="noopener noreferrer">
+                <div class="download-main">
+                    <span>A Prompt Pattern Catalog to Enhance Prompt Engineering with ChatGPT (White et al., 2023)</span>
+                </div>
+            </a>
+            <div class="download-meta">
+                این مقاله یک «کاتالوگ الگوهای پرامپت» ارائه می‌دهد و نشان می‌دهد چگونه می‌توان با الگوهای تکرارشونده، کیفیت خروجی مدل را به‌صورت سیستماتیک بهبود داد.
+                ساختار فصل‌های مربوط به الگوهای پرامپت (Prompt Patterns) و طراحی تمرین‌های عملی دوره مستقیماً از دسته‌بندی‌ها و مثال‌های این مقاله الهام گرفته شده است.
+            </div>
+        </div>
+
+        <!-- LLaMA Models -->
+        <div class="download-item">
+            <a class="download-link" href="https://arxiv.org/abs/2302.13971" target="_blank" rel="noopener noreferrer">
+                <div class="download-main">
+                    <span>LLaMA: Open and Efficient Foundation Language Models (Touvron et al., 2023)</span>
+                </div>
+            </a>
+            <div class="download-meta">
+                مقالهٔ معرفی خانوادهٔ مدل‌های LLaMA به‌عنوان مدل‌های باز و به‌نسبت سبک که روی داده‌های عمومی آموزش داده شده‌اند.
+                در بحث مربوط به انتخاب مدل برای پروژه‌های عملی، محدودیت‌های استقرار و مقایسهٔ مدل‌های متن‌باز با مدل‌های تجاری، به نتایج و طراحی LLaMA ارجاع داده می‌شود.
+            </div>
+        </div>
+
+    </div>
+</section>
+
+    <section class="section-card" id="audience">
+        <div class="section-card-header">
+            <h2 class="section-title">این دوره برای چه کسانی مناسب است؟</h2>
+        </div>
+        <p class="section-subtitle">
+            اگر فکر می‌کنید از ChatGPT فقط برای چند سؤال ساده استفاده می‌کنید
+            و می‌خواهید آن را به یک ابزار جدی در کار و یادگیری خود تبدیل کنید، این دوره دقیقاً برای شما طراحی شده است.
+        </p>
+
+        <ul class="audience-list">
+            <li>
+                افرادی که می‌خواهند از کاربر معمولی به یک کاربر حرفه‌ای و طراح پرامپت تبدیل شوند
+                و خروجی‌های دقیق، قابل‌اعتماد و قابل‌استفاده در کار واقعی بگیرند.
+            </li>
+            <li>
+کارآفرینان، مدیران استارتاپ و بنیان‌گذاران کسب‌وکارهایی که می‌خواهند با کمک مدل‌های زبانی، فرایندهای خود را مقیاس‌پذیر کنند، هزینه‌ها را کاهش دهند و مزیت رقابتی ایجاد کنند.            </li>
+            <li>
+                مدیران و کارشناسان سازمانی که می‌خواهند بخشی از فرایندهای تکراری،
+                گزارش‌نویسی و تحلیل داده را با کمک GPTهای سفارشی، Agentها و Excel خودکار کنند.
+            </li>
+            <li>
+                دانشجویان و علاقه‌مندان به هوش مصنوعی که می‌خواهند قبل از ورود به مباحث توسعه مدل،
+                مهارت کار حرفه‌ای با مدل‌های آماده را یاد بگیرند و در رزومه خود یک مهارت کاربردی و قابل ارائه داشته باشند.
+            </li>
+        </ul>
+    </section>
+
+    <section class="section-card" id="contact">
+        <div class="section-card-header">
+            <h2 class="section-title">تماس با من</h2>
+        </div>
+        <p class="section-subtitle">
+            برای دریافت اطلاعات تکمیلی درباره دوره، زمان‌بندی برگزاری یا همکاری‌های آموزشی و سازمانی، می‌توانید از راه‌های زیر با من در ارتباط باشید.
+        </p>
+
+        <div class="contact-grid">
+            <div class="contact-item">
+                <div class="contact-label">ایمیل</div>
+                <div><a href="mailto:lmustafasadeghil@gmail.com">lmustafasadeghil@gmail.com</a></div>
+            </div>
+            <div class="contact-item">
+                <div class="contact-label">لینکدین</div>
+                <div><a href="https://www.linkedin.com/in/mustafa-sadeghi" target="_blank">linkedin.com/in/mustafa-sadeghi</a></div>
+            </div>
+        </div>
+    </section>
+
+</main>6
 
 <footer>
-    © تمامی حقوق مادی و معنوی این دوره متعلق به مصطفی صادقی است. استفاده آموزشی با ذکر منبع بلامانع است.
+  Developed by <a href="https://www.linkedin.com/in/mustafa-sadeghi/" target="_blank" rel="noopener">Mustafa Sadeghi</a> ©
 </footer>
 
 </body>
