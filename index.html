@@ -4,173 +4,480 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>دوره هوش مصنوعی مولد | Generative AI</title>
+
+    <!-- فونت وب (در صورت نیاز می‌توانی حذفش کنی) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700&display=swap"
+        rel="stylesheet"
+    >
+
     <style>
+        :root {
+            --primary: #002e48;
+            --primary-soft: #014568;
+            --bg: #fcf9f4;
+            --card-bg: #ffffff;
+            --accent-chip: rgba(0, 46, 72, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
-            font-family: "IRANSans", sans-serif;
-            background-color: #fcf9f4;
-            color: #002e48;
+            font-family: "Vazirmatn", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background-color: var(--bg);
+            color: var(--primary);
             line-height: 1.8;
         }
 
+        a {
+            color: inherit;
+        }
+
+        /* نوار بالا / ناوبری ساده */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 20px;
+            background-color: #001a29;
+            color: #f5f7fa;
+            font-size: 13px;
+        }
+
+        .top-bar .brand {
+            font-weight: 600;
+            letter-spacing: 0.03em;
+        }
+
+        .top-bar .tagline {
+            opacity: 0.8;
+        }
+
+        /* هدر / هیرو */
         header {
-            background-color: #002e48;
+            background: linear-gradient(135deg, #002e48, #014568);
             color: #fcf9f4;
-            padding: 50px 20px;
+            padding: 50px 20px 60px;
             text-align: center;
+            position: relative;
+            overflow: hidden;
         }
 
-        header h1 {
-            margin: 0;
-            font-size: 32px;
-            font-weight: bold;
-        }
-
-        header p {
-            margin-top: 10px;
-            font-size: 18px;
+        header::before {
+            content: "";
+            position: absolute;
+            inset-inline-start: -120px;
+            inset-block-start: -120px;
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            background: radial-gradient(circle at center, rgba(252, 249, 244, 0.16), transparent 65%);
             opacity: 0.9;
         }
 
-        .container {
-            max-width: 900px;
-            margin: 50px auto;
-            background: white;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        header::after {
+            content: "";
+            position: absolute;
+            inset-inline-end: -120px;
+            inset-block-end: -140px;
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            background: radial-gradient(circle at center, rgba(252, 249, 244, 0.12), transparent 65%);
         }
 
-        h2 {
-            border-right: 6px solid #002e48;
-            padding-right: 12px;
-            margin-top: 40px;
-            font-size: 22px;
+        .hero-inner {
+            position: relative;
+            max-width: 980px;
+            margin: 0 auto;
+            z-index: 1;
         }
 
-        ul {
-            padding-right: 20px;
+        .hero-badge-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            margin-bottom: 18px;
+            font-size: 12px;
+        }
+
+        .hero-badge {
+            padding: 4px 10px;
+            border-radius: 999px;
+            border: 1px solid rgba(252, 249, 244, 0.6);
+            background: rgba(0, 0, 0, 0.08);
+            backdrop-filter: blur(4px);
+        }
+
+        header h1 {
+            margin: 0 0 10px;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        header p.hero-subtitle {
+            margin: 0;
+            font-size: 15px;
+            opacity: 0.9;
+        }
+
+        .hero-cta-row {
+            margin-top: 24px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .hero-btn {
+            padding: 10px 18px;
+            border-radius: 999px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+        }
+
+        .hero-btn.primary {
+            background-color: #fcf9f4;
+            color: #002e48;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+        }
+
+        .hero-btn.primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+        }
+
+        .hero-btn.ghost {
+            background: transparent;
+            color: #fcf9f4;
+            border: 1px solid rgba(252, 249, 244, 0.7);
+        }
+
+        .hero-btn.ghost:hover {
+            background: rgba(0, 0, 0, 0.14);
+        }
+
+        /* بدنه اصلی */
+        .page-wrapper {
+            max-width: 1100px;
+            margin: -32px auto 60px;
+            padding: 0 16px;
+            position: relative;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.4fr);
+            gap: 26px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 14px;
+            padding: 24px 22px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 46, 72, 0.04);
+        }
+
+        .card h2 {
+            margin: 0 0 14px;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card h2::before {
+            content: "";
+            width: 6px;
+            height: 24px;
+            border-radius: 999px;
+            background: linear-gradient(180deg, #002e48, #014568);
+        }
+
+        .card p {
+            margin: 6px 0 10px;
+            font-size: 14px;
+        }
+
+        .chips-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
             margin-top: 10px;
         }
 
-        ul li {
-            margin-bottom: 10px;
-            font-size: 17px;
+        .chip {
+            font-size: 11px;
+            padding: 4px 9px;
+            border-radius: 999px;
+            background-color: var(--accent-chip);
         }
 
-        .intro-text {
-            font-size: 16px;
-            margin-top: 10px;
+        .topics-list {
+            list-style: none;
+            padding-right: 0;
+            margin: 10px 0 0;
+        }
+
+        .topics-list li {
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        .topics-list strong {
+            font-size: 14.5px;
         }
 
         .highlight-box {
-            margin-top: 25px;
-            padding: 18px 20px;
+            margin-top: 12px;
+            padding: 12px 12px;
             border-radius: 10px;
             background-color: #fcf9f4;
-            border: 1px solid rgba(0, 46, 72, 0.15);
-            font-size: 15px;
+            border: 1px solid rgba(0, 46, 72, 0.12);
+            font-size: 13px;
         }
 
-        .downloads a {
-            display: block;
-            margin: 10px 0;
-            padding: 12px 18px;
+        .downloads {
+            margin-top: 14px;
+        }
+
+        .download-item {
+            margin-bottom: 10px;
+        }
+
+        .download-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 14px;
+            border-radius: 10px;
             background-color: #002e48;
             color: #fcf9f4;
             text-decoration: none;
-            border-radius: 8px;
-            width: fit-content;
-            transition: 0.3s;
-            font-size: 15px;
+            font-size: 14px;
+            transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+            box-shadow: 0 4px 12px rgba(0, 46, 72, 0.35);
         }
 
-        .downloads a:hover {
+        .download-link span.icon {
+            font-size: 16px;
+        }
+
+        .download-link:hover {
             background-color: #014568;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 18px rgba(0, 46, 72, 0.5);
+        }
+
+        .download-meta {
+            font-size: 11px;
+            opacity: 0.8;
+            margin-top: 4px;
+            margin-right: 4px;
+        }
+
+        .audience-list {
+            list-style: none;
+            padding-right: 0;
+            margin: 8px 0 0;
+            font-size: 13px;
+        }
+
+        .audience-list li {
+            margin-bottom: 6px;
         }
 
         footer {
             text-align: center;
-            margin-top: 50px;
-            padding: 20px;
+            padding: 22px 12px 28px;
             color: #002e48;
             opacity: 0.7;
-            font-size: 14px;
+            font-size: 12px;
         }
 
+        /* واکنش‌گرا */
+        @media (max-width: 900px) {
+            header {
+                padding: 40px 16px 50px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+
+            header p.hero-subtitle {
+                font-size: 13px;
+            }
+
+            .page-wrapper {
+                margin-top: -24px;
+            }
+
+            .grid {
+                grid-template-columns: minmax(0, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .top-bar {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
+            }
+
+            .card {
+                padding: 18px 16px;
+            }
+        }
     </style>
 </head>
 
 <body>
 
+<div class="top-bar">
+    <div class="brand">Generative AI Course</div>
+    <div class="tagline">مرکز فناوری اطلاعات شهرستان گرگان</div>
+</div>
+
 <header>
-    <h1>دوره تخصصی هوش مصنوعی مولد (Generative AI)</h1>
-    <p>مرکز فناوری اطلاعات شهرستان گرگان – تمرکز ویژه بر مهندسی پرامپت و به‌کارگیری عملی LLMها</p>
+    <div class="hero-inner">
+        <div class="hero-badge-row">
+            <div class="hero-badge">تمرکز ویژه بر مهندسی پرامپت (Prompt Engineering)</div>
+            <div class="hero-badge">کاربرد عملی LLMها، RAG و AI Agents</div>
+        </div>
+
+        <h1>دوره تخصصی هوش مصنوعی مولد (Generative AI)</h1>
+        <p class="hero-subtitle">
+            از استفاده معمولی از ChatGPT فراتر بروید و یاد بگیرید چطور با طراحی پرامپت‌های حرفه‌ای،
+            مدل‌های زبانی را به ابزارهای قابل‌اعتماد و کاربردی در سازمان و کسب‌وکار تبدیل کنید.
+        </p>
+
+        <div class="hero-cta-row">
+            <a href="#chapters" class="hero-btn primary">
+                <span>مشاهده فصل‌های منتشرشده</span>
+                <span>↓</span>
+            </a>
+            <a href="#topics" class="hero-btn ghost">
+                <span>آشنایی با سرفصل‌ها</span>
+            </a>
+        </div>
+    </div>
 </header>
 
-<div class="container">
+<main class="page-wrapper">
+    <div class="grid">
+        <!-- ستون چپ: توضیح و سرفصل‌ها -->
+        <section class="card" id="topics">
+            <h2>درباره دوره و سرفصل‌ها</h2>
+            <p>
+                این دوره برای متخصصان، دانشجویان و علاقه‌مندان جدی به هوش مصنوعی طراحی شده است که می‌خواهند
+                <strong>پرامپت‌نویسی حرفه‌ای</strong>، استفاده از مدل‌های زبانی بزرگ و ساخت سیستم‌های مبتنی بر GenAI را
+                به‌صورت عملی و پروژه‌محور یاد بگیرند.
+            </p>
 
-    <p class="intro-text">
-        این دوره برای افرادی طراحی شده است که می‌خواهند فراتر از استفاده سطحی از ChatGPT و ابزارهای مشابه بروند
-        و <strong>مهارت مهندسی پرامپت (Prompt Engineering)</strong> را به‌صورت عمیق، ساختاریافته و کاربردی یاد بگیرند.
-        علاوه بر مباحث فنی GenAI، تمرکز اصلی دوره روی این است که چگونه با طراحی پرامپت‌های حرفه‌ای، مدل‌های زبانی را
-        به سمت خروجی‌های دقیق، قابل‌کنترل و متناسب با نیازهای کسب‌وکار هدایت کنیم.
-    </p>
+            <div class="chips-row">
+                <span class="chip">Prompt Engineering</span>
+                <span class="chip">LLM-based Systems</span>
+                <span class="chip">RAG</span>
+                <span class="chip">GPT Assistants</span>
+                <span class="chip">AI Agents</span>
+            </div>
 
-    <div class="highlight-box">
-        در این دوره، مهندسی پرامپت فقط یک فصل تئوری نیست؛
-        در تمام طول دوره، روی طراحی پرامپت برای سناریوهای واقعی کار می‌کنیم:
-        <strong>از نوشتن پرامپت برای تحلیل داده و تولید گزارش، تا طراحی Prompt Pipeline برای RAG و ساخت Agentهای هوشمند.</strong>
-        هدف این است که شرکت‌کننده بتواند بعد از دوره، خودش <strong>سیستم‌های پرامپت‌محور</strong> برای سازمان یا پروژه‌های شخصی‌اش طراحی کند.
+            <ul class="topics-list">
+                <li>
+                    <strong>مبانی هوش مصنوعی مولد و مدل‌های زبانی بزرگ (LLMها)</strong><br>
+                    آشنایی با معماری، توانایی‌ها و محدودیت‌های LLMها و نقش پرامپت در شکل‌دهی به رفتار مدل.
+                </li>
+                <li>
+                    <strong>مهندسی پرامپت (Prompt Engineering) در عمل</strong><br>
+                    اصول طراحی پرامپت، الگوهای پیشرفته، زنجیره‌سازی پرامپت‌ها، تعریف نقش، مدیریت Context
+                    و ساخت پرامپت‌های چندمرحله‌ای برای سناریوهای واقعی.
+                </li>
+                <li>
+                    <strong>RAG و طراحی پرامپت برای سیستم‌های بازیابی–تولید</strong><br>
+                    ترکیب جست‌وجوی هوشمند با تولید متن، طراحی پرامپت مخصوص RAG و کنترل منبع و استناد پاسخ‌ها.
+                </li>
+                <li>
+                    <strong>دستیارهای سفارشی GPT و Agentهای مبتنی بر پرامپت</strong><br>
+                    ساخت GPTهای اختصاصی و Agentهایی که بتوانند وظایف مشخص را با تکیه بر دستورالعمل‌های دقیق و پرامپت‌های طراحی‌شده انجام دهند.
+                </li>
+                <li>
+                    <strong>تحلیل داده، گزارش‌نویسی و Data Storytelling</strong><br>
+                    استفاده از پرامپت‌ها برای تحلیل داده در کنار Excel، خلاصه‌سازی، تولید گزارش مدیریتی و تبدیل خروجی مدل به روایت قابل‌فهم.
+                </li>
+            </ul>
+
+            <div class="highlight-box">
+                در تمام طول دوره، تمرین‌های عملی پرامپت‌نویسی انجام می‌شود و شرکت‌کنندگان با
+                <strong>نمونه‌پرومپت‌های واقعی</strong> در زمینه‌های مختلف (تحلیل داده، تولید محتوا، مستندسازی، تصمیم‌سازی و اتوماسیون)
+                کار خواهند کرد.
+            </div>
+        </section>
+
+        <!-- ستون راست: فایل‌ها و مخاطبان -->
+        <section class="card" id="chapters">
+            <h2>فصل‌های منتشرشده و فایل‌های دوره</h2>
+            <p>
+                فصل‌های دوره به‌صورت PDF و با ساختار آموزشی مرحله‌به‌مرحله ارائه می‌شوند.
+                هر فصل شامل توضیحات مفهومی، مثال‌های عملی و مجموعه‌ای از پرامپت‌های آماده استفاده است.
+            </p>
+
+            <div class="downloads">
+                <div class="download-item">
+                    <a class="download-link" href="assets/pdf/GenAI-ch1.pdf">
+                        <span class="icon">📄</span>
+                        <span>فصل اول – مبانی هوش مصنوعی مولد و LLMها</span>
+                    </a>
+                    <div class="download-meta">آشنایی اولیه با GenAI، مدل‌های زبانی و نقش پرامپت در هدایت مدل.</div>
+                </div>
+
+                <div class="download-item">
+                    <a class="download-link" href="assets/pdf/GenAI-ch2.pdf">
+                        <span class="icon">🧠</span>
+                        <span>فصل دوم – مهندسی پرامپت: اصول، الگوها و بهترین‌روش‌ها</span>
+                    </a>
+                    <div class="download-meta">تمرکز اصلی بر پرامپت‌نویسی عملی، الگوهای قوی و خطاهای رایج.</div>
+                </div>
+
+                <div class="download-item">
+                    <a class="download-link" href="assets/pdf/GenAI-ch3.pdf">
+                        <span class="icon">🔎</span>
+                        <span>فصل سوم – RAG و طراحی پرامپت برای سیستم‌های بازیابی–تولید</span>
+                    </a>
+                    <div class="download-meta">طراحی سیستم‌هایی که پاسخ‌ها را بر اساس اسناد و دانش سازمانی ارائه می‌دهند.</div>
+                </div>
+
+                <div class="download-item">
+                    <a class="download-link" href="assets/pdf/GenAI-ch4.pdf">
+                        <span class="icon">🤖</span>
+                        <span>فصل چهارم – دستیارهای GPT و Agentهای مبتنی بر پرامپت</span>
+                    </a>
+                    <div class="download-meta">ساخت دستیارها و Agentهایی که بتوانند وظایف مشخص را به‌صورت خودکار انجام دهند.</div>
+                </div>
+            </div>
+
+            <h2 style="margin-top: 30px;">این دوره برای چه کسانی مناسب است؟</h2>
+            <ul class="audience-list">
+                <li>افرادی که می‌خواهند در سطحی فراتر از کاربر معمولی، با مدل‌های زبانی کار کنند.</li>
+                <li>برنامه‌نویسان، تحلیل‌گران داده و علاقه‌مندان به ساخت ابزارهای مبتنی بر GenAI.</li>
+                <li>مدیران و کارشناسانی که به دنبال استفاده عملی از هوش مصنوعی در فرایندهای سازمانی هستند.</li>
+            </ul>
+        </section>
     </div>
-
-    <h2>سرفصل‌های آموزشی دوره</h2>
-    <ul>
-        <li>
-            <strong>مبانی هوش مصنوعی مولد و مدل‌های زبانی بزرگ (LLMها)</strong><br>
-            آشنایی با مفاهیم پایه، معماری مدل‌های زبانی و نقش پرامپت در هدایت رفتار مدل.
-        </li>
-        <li>
-            <strong>مهندسی پرامپت (Prompt Engineering) در عمل</strong><br>
-            الگوهای استاندارد پرامپت‌نویسی، طراحی پرامپت‌های چندمرحله‌ای، زنجیره‌سازی پرامپت‌ها (Prompt Chaining)،
-            تعریف نقش (Role Prompting)، مدیریت Context و کاهش خطاهای مدل.
-        </li>
-        <li>
-            <strong>مباحث پیشرفته RAG (Retrieval-Augmented Generation)</strong><br>
-            ترکیب تکنیک‌های جست‌وجو و پرامپت‌نویسی برای ساخت سیستم‌هایی که بر اساس اسناد و داده‌های واقعی پاسخ می‌دهند،
-            طراحی پرامپت‌های مخصوص RAG و کنترل منبع پاسخ‌ها.
-        </li>
-        <li>
-            <strong>طراحی و توسعه دستیارهای سفارشی GPT</strong><br>
-            تبدیل مهارت پرامپت‌نویسی به <strong>دستیارهای پایدار و قابل‌استفاده مجدد</strong>، تعریف دستورالعمل‌ها، محدودیت‌ها
-            و طراحی Prompt Template برای سناریوهای سازمانی.
-        </li>
-        <li>
-            <strong>ساخت AI Agents با ChatGPT و Zapier</strong><br>
-            استفاده از پرامپت برای تعریف رفتار Agent، اتصال به ابزارها و سرویس‌های بیرونی، و طراحی گردش‌کارهایی که
-            با ترکیب منطق، داده و اتوماسیون، کارهای واقعی را انجام می‌دهند.
-        </li>
-        <li>
-            <strong>تحلیل داده، گزارش‌نویسی و Data Storytelling با پرامپت‌نویسی هدفمند</strong><br>
-            طراحی پرامپت‌هایی برای تحلیل داده در کنار Excel، ساخت گزارش‌های مدیریتی، خلاصه‌سازی هوشمند و تبدیل خروجی خام مدل
-            به روایت قابل‌فهم برای تصمیم‌گیران.
-        </li>
-    </ul>
-
-    <h2>فصل‌های منتشرشده دوره</h2>
-    <p class="intro-text">
-        فصل‌های آموزشی به‌صورت تدریجی منتشر می‌شوند. هر فصل شامل توضیحات مفهومی، مثال‌های عملی و نمونه‌پرومپت‌هایی است
-        که می‌توانید مستقیماً در پروژه‌ها و محیط کاری خود استفاده کنید.
-    </p>
-
-    <div class="downloads">
-        <a href="assets/pdf/GenAI-ch1.pdf">دانلود فصل اول – مبانی هوش مصنوعی مولد و LLMها (PDF)</a>
-        <a href="assets/pdf/GenAI-ch2.pdf">دانلود فصل دوم – مهندسی پرامپت: اصول، الگوها و بهترین‌روش‌ها (PDF)</a>
-        <a href="assets/pdf/GenAI-ch3.pdf">دانلود فصل سوم – RAG و طراحی پرامپت برای سیستم‌های بازیابی–تولید (PDF)</a>
-        <a href="assets/pdf/GenAI-ch4.pdf">دانلود فصل چهارم – دستیارهای GPT و Agentهای مبتنی بر پرامپت (PDF)</a>
-    </div>
-
-</div>
+</main>
 
 <footer>
     © تمامی حقوق مادی و معنوی این دوره متعلق به مصطفی صادقی است. استفاده آموزشی با ذکر منبع بلامانع است.
